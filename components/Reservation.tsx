@@ -13,7 +13,7 @@ const schema = z.object({
   phone: z.string().min(8),
   date: z.string().min(1, "Choose a date"),
   time: z.string(),
-  guests: z.coerce.number().min(1).max(8),
+  guests: z.number().min(1, "Please select at least 1 guest").max(8, "Maximum 8 guests"),
   message: z.string().optional(),
   dietary: z.string().optional(),
 });
@@ -28,7 +28,10 @@ export default function Reservation() {
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { guests: 2, time: "20:00" },
+    defaultValues: { 
+      guests: 2, 
+      time: "20:00" 
+    } as const,
   });
 
   const onSubmit = async (data: FormValues) => {
@@ -91,7 +94,19 @@ export default function Reservation() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <input type="number" {...register("guests")} className="input" placeholder="Number of guests" min="1" max="8" />
+              <input 
+                type="number" 
+                {...register("guests", { 
+                  valueAsNumber: true 
+                })} 
+                className="input" 
+                placeholder="Number of guests" 
+                min="1" 
+                max="8" 
+              />
+              {errors.guests && (
+                <p className="text-xs text-red-600 mt-1.5 ml-1">{errors.guests.message}</p>
+              )}
               <input {...register("dietary")} className="input" placeholder="Dietary requirements" />
             </div>
 
