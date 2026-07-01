@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import { LenisProvider } from "@/components/providers/LenisProvider";
 import { GSAPProvider } from "@/components/providers/GSAPProvider";
 import ScrollProgress from "@/components/ScrollProgress";
+import PreloaderWrapper from "@/components/PreloaderWrapper";
 
 // Elegant typography
 const playfair = Playfair_Display({
@@ -38,8 +39,10 @@ export default function RootLayout({
       <body className="min-h-full bg-[#f8f4ed] text-[#2a211c]">
         <GSAPProvider>
           <LenisProvider>
-            <ScrollProgress />
-            {children}
+            <PreloaderWrapper>
+              <ScrollProgress />
+              {children}
+            </PreloaderWrapper>
           </LenisProvider>
         </GSAPProvider>
         <Toaster position="top-center" richColors closeButton />

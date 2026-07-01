@@ -31,6 +31,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Cinematic global helpers */
+.cinematic {
+  will-change: transform, opacity;
+}
+
+.preloader {
+  backdrop-filter: blur(1px);
+}
+
 h1, h2, .serif {
   font-family: var(--font-serif);
   font-feature-settings: "kern" "tnum";
