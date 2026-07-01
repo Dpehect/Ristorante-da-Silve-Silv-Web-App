@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
  * Subtle scroll progress bar at top - premium touch
@@ -17,7 +16,7 @@ export default function ScrollProgress() {
       width: "100%",
       ease: "none",
       scrollTrigger: {
-        trigger: document.body,
+        trigger: document.documentElement,
         start: "top top",
         end: "bottom bottom",
         scrub: 0.3,

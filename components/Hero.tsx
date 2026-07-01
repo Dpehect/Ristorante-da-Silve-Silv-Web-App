@@ -11,7 +11,7 @@ export default function Hero() {
   const bgRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    if (!heroRef.current) return;
+    if (!heroRef.current || !bgRef.current || !contentRef.current) return;
 
     // Subtle parallax on background image + content on scroll
     gsap.to(bgRef.current, {

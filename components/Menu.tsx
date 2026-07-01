@@ -57,7 +57,7 @@ export default function Menu() {
       },
       once: true,
     });
-  }, { scope: sectionRef, dependencies: [currentDishes] });
+  }, { scope: sectionRef });
 
   // GSAP Hover animation
   const handleHover = (e: React.MouseEvent<HTMLDivElement>, enter: boolean) => {
@@ -111,30 +111,10 @@ export default function Menu() {
     }
   };
 
-  // Smooth category change
+  // Smooth category change - simple state update (grid will re-render with new dishes)
   const changeCategory = (id: string) => {
     if (id === activeCat) return;
-
-    const cards = cardsRef.current?.querySelectorAll(".dish-card");
-
-    if (cards && cards.length) {
-      gsap.to(cards, {
-        opacity: 0,
-        y: 20,
-        duration: 0.25,
-        ease: "power2.in",
-        onComplete: () => {
-          setActiveCat(id);
-          gsap.fromTo(
-            cards,
-            { y: 40, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6, stagger: 0.06, ease: "power2.out" }
-          );
-        },
-      });
-    } else {
-      setActiveCat(id);
-    }
+    setActiveCat(id);
   };
 
   return (

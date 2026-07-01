@@ -3,7 +3,6 @@
 import { useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 
 /**
  * GSAPProvider
@@ -12,7 +11,7 @@ import { useGSAP } from "@gsap/react";
  */
 export function GSAPProvider({ children }: { children: React.ReactNode }) {
   useLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger, useGSAP);
+    gsap.registerPlugin(ScrollTrigger);
 
     // Elegant ScrollTrigger defaults for this project
     ScrollTrigger.defaults({
