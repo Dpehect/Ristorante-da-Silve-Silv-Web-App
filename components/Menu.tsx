@@ -34,7 +34,7 @@ export default function Menu() {
 
   // GSAP: Staggered entry when section enters view (cravburgers.shop energy)
   useGSAP(() => {
-    if (!cardsRef.current) return;
+    if (!cardsRef.current || !sectionRef.current) return;
 
     const cards = cardsRef.current.querySelectorAll(".dish-card");
 

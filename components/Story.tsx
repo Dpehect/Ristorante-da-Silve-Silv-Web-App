@@ -12,21 +12,23 @@ export default function Story() {
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
-      // Title reveal
-      gsap.from(titleRef.current, {
-        y: 80,
-        opacity: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: titleRef.current,
-          start: "top 75%",
-        },
-      });
+      // Title reveal - guard against null ref during hydration/mount
+      if (titleRef.current) {
+        gsap.from(titleRef.current, {
+          y: 80,
+          opacity: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: titleRef.current,
+            start: "top 75%",
+          },
+        });
+      }
 
       // Staggered paragraph reveals — cravburgers.shop style
       const paras = paragraphsRef.current?.querySelectorAll("p, .story-block");
-      if (paras) {
+      if (paras && paragraphsRef.current) {
         gsap.from(paras, {
           y: 60,
           opacity: 0,
