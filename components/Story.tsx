@@ -1,63 +1,53 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const storyCards = [
-  {
-    title: "Maria",
-    role: "The Cook",
-    text: "Every morning Maria walks the market and the garden. She never writes a menu. She simply cooks what moved her that day — the tomatoes that tasted like summer, the fish that arrived glistening, the herbs that smelled sweetest.",
-    detail: "She has been cooking for people she loves for over thirty years.",
-  },
-  {
-    title: "Silve",
-    role: "The Host",
-    text: "Silve welcomes you into their home like family. He sets the table, pours the wine, and tells you what his mother has prepared. There is never a rush. Only conversation, laughter, and plates that arrive when they are ready.",
-    detail: "He remembers every guest’s name and how they take their coffee.",
-  },
-];
-
+/**
+ * Cinematic, letter-like storytelling.
+ * Uses scroll progress to create an emotional, personal reveal.
+ */
 export default function Story() {
+  const { scrollYProgress } = useScroll({
+    target: { current: null }, // We'll let the section drive it naturally
+  });
+
+  const opacity1 = useTransform(scrollYProgress, [0.1, 0.35], [0.2, 1]);
+  const y1 = useTransform(scrollYProgress, [0.1, 0.35], [40, 0]);
+
   return (
-    <section id="story" className="section max-w-5xl mx-auto px-6 pt-20 pb-24">
-      <div className="text-center mb-14">
-        <div className="uppercase tracking-[3px] text-xs text-[#81746a] mb-3">A FAMILY TABLE</div>
-        <h2 className="text-[#2c2522] text-5xl md:text-6xl font-medium tracking-[-1.2px] leading-none font-serif">
-          This is our home.<br />You are our guests.
-        </h2>
+    <section id="story" className="section max-w-[860px] mx-auto px-6 pt-24 pb-28">
+      <div className="text-center mb-16">
+        <div className="uppercase tracking-[4px] text-[10px] text-[#A36A4E] mb-4">A FAMILY INVITATION</div>
+        <h2 className="text-[58px] leading-none tracking-[-1.8px] font-medium">This is how we eat.</h2>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {storyCards.map((card, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.08, duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-            className="card p-10 md:p-12 rounded-2xl flex flex-col"
-          >
-            <div>
-              <div className="font-serif text-4xl tracking-tight text-[#2c2522]">{card.title}</div>
-              <div className="text-[#c46b4e] tracking-[1px] text-sm font-medium mt-1">{card.role}</div>
-            </div>
-            
-            <div className="mt-auto pt-9 text-[#5c524b] leading-[1.72] text-[15.2px]">
-              {card.text}
-            </div>
-            
-            <div className="mt-8 text-xs tracking-[0.5px] text-[#81746a] border-t border-[#d9d0c2] pt-4">
-              {card.detail}
-            </div>
-          </motion.div>
-        ))}
+      <div className="space-y-16 text-[17px] leading-[1.65] text-[#524A43]">
+        <motion.div style={{ opacity: opacity1, y: y1 }} className="max-w-[640px]">
+          Every morning Maria walks the market with a basket and no list. 
+          She returns with whatever moved her — tomatoes still warm from the vine, fish that arrived before dawn, herbs that smell like the hills behind the house.
+        </motion.div>
+
+        <div className="grid md:grid-cols-12 gap-x-10 gap-y-8 text-[15px]">
+          <div className="md:col-span-5 text-[#A36A4E] font-medium tracking-tight">Maria</div>
+          <div className="md:col-span-7 leading-relaxed">
+            She has never written a menu in her life. The table is set for whoever arrives that evening. 
+            She cooks from memory and feeling. When the food is ready, it comes out.
+          </div>
+
+          <div className="md:col-span-5 text-[#A36A4E] font-medium tracking-tight pt-6 md:pt-0">Silve</div>
+          <div className="md:col-span-7 leading-relaxed pt-6 md:pt-0">
+            He opens the door. He pours the wine. He tells you what his mother made and why it matters today. 
+            There is no rush. The evening unfolds the way evenings should.
+          </div>
+        </div>
       </div>
 
-      <div className="max-w-2xl mx-auto text-center mt-16 text-[#5c524b] text-[15px] leading-relaxed">
-        There is no printed menu. There are no categories decided months in advance. 
-        Every evening we cook for the people who arrive, using what the land and sea gave us that morning. 
-        You are simply invited to sit at our table.
+      <div className="mt-16 pt-8 border-t border-[#D8D0C2] max-w-[620px]">
+        <p className="text-[#524A43] italic text-[15px]">
+          There are twelve seats. When they are taken, the door is closed. 
+          We cook for the people who chose to sit with us that night.
+        </p>
       </div>
     </section>
   );

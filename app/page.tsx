@@ -2,36 +2,23 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Story from "@/components/Story";
 import Experience from "@/components/Experience";
-import MenuSection from "@/components/MenuSection";
+import Menu from "@/components/Menu";
 import Gallery from "@/components/Gallery";
-import ReservationForm from "@/components/ReservationForm";
+import Reservation from "@/components/Reservation";
 import FindUs from "@/components/FindUs";
 import Footer from "@/components/Footer";
 
-// Main landing page for da Silve.
-// Everything is intentionally on one beautiful, deliberate scroll.
-// The goal: an emotional, intimate invitation that feels like being personally welcomed.
-
-export default function DaSilve() {
+export default function RistoranteDaSilve() {
   return (
     <>
       <Navbar />
-      
       <Hero />
-      
       <Story />
-      
       <Experience />
-      
-      <MenuSection />
-      
+      <Menu />
       <Gallery />
-      
-      {/* Reservation is the emotional climax — spacious and considered */}
-      <ReservationForm />
-      
+      <Reservation />
       <FindUs />
-      
       <Footer />
     </>
   );
