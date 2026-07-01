@@ -1,59 +1,36 @@
-# Ristorante da Silve
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A cinematic, premium, and deeply alive website for a tiny family-run restaurant in Fasano, Puglia.
+## Getting Started
 
-This redesign combines the powerful scroll-driven storytelling of sites like cravburgers.shop with warm, elegant Italian soul — using heavy GSAP + ScrollTrigger and subtle, refined Three.js interactions (especially in the Menu).
-
-## Key Features
-- GSAP ScrollTrigger for rich section reveals, parallax, and staggered animations
-- Elegant @react-three/fiber 3D dish previews in the Menu (gentle mouse tilt + breathing motion)
-- Lenis smooth scrolling
-- JSON-powered menu + reservations
-- Intimate, high-end, hand-crafted feel
-
-## Animation Strategy
-- **GSAP + ScrollTrigger** is the backbone (staggers, scrubs, parallax, section triggers)
-- **Three.js** is used sparingly and elegantly for the menu — each dish has a small refined 3D preview that reacts to hover with tilt and subtle animation. Never flashy.
-- Micro interactions use GSAP timelines for premium feel.
-
-The site should feel alive while staying warm and personal.
-
-## Tech & Motion
-- Next.js 15 + TypeScript
-- **GSAP + ScrollTrigger** (primary animation engine)
-- Lenis for buttery smooth scrolling
-- React Hook Form + Zod
-- Pure file-based JSON backend (`fs/promises`)
-
-## Key Motion Highlights
-- Parallax + scrub animations in Hero
-- Staggered scroll reveals throughout (Story, Experience, Gallery)
-- Menu: Staggered card entrance + GSAP hover + beautiful GSAP detail expansion + category transitions
-- Reservation form with GSAP micro interactions
-
-## Running
+First, run the development server:
 
 ```bash
-npm install
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Folder Structure
-```
-app/
-  api/ (menu + reservations)
-components/
-  providers/GSAPProvider.tsx
-  providers/LenisProvider.tsx
-  Hero.tsx
-  Story.tsx
-  Experience.tsx
-  Menu.tsx          ← Highly dynamic
-  Gallery.tsx
-  Reservation.tsx
-data/menu.json
-data/reservations.json
-```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-The site should feel alive and special. Every scroll interaction was designed with care.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

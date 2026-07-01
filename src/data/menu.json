@@ -1,0 +1,55 @@
+{
+  "categories": [
+    {
+      "name": "Antipasti",
+      "items": [
+        {
+          "id": "a1",
+          "name": "Burrata Artigianale",
+          "description": "Hand-crafted burrata from local farms, heirloom tomatoes, basil oil.",
+          "price": "€18"
+        },
+        {
+          "id": "a2",
+          "name": "Polpo Arrostito",
+          "description": "Charred octopus, smoked potato puree, Taggiasca olives, caper powder.",
+          "price": "€24"
+        }
+      ]
+    },
+    {
+      "name": "Primi",
+      "items": [
+        {
+          "id": "p1",
+          "name": "Orecchiette al Pomodoro",
+          "description": "Handmade orecchiette, roasted cherry tomatoes, cacioricotta, fresh basil.",
+          "price": "€22"
+        },
+        {
+          "id": "p2",
+          "name": "Risotto ai Frutti di Mare",
+          "description": "Acquerello rice, fresh Adriatic seafood, lemon zest, saffron.",
+          "price": "€28"
+        }
+      ]
+    },
+    {
+      "name": "Secondi",
+      "items": [
+        {
+          "id": "s1",
+          "name": "Pescato del Giorno",
+          "description": "Catch of the day, baked in salt crust or grilled with seasonal vegetables.",
+          "price": "€35"
+        },
+        {
+          "id": "s2",
+          "name": "Filetto di Manzo",
+          "description": "Beef tenderloin, Primitivo reduction, roasted wild mushrooms.",
+          "price": "€42"
+        }
+      ]
+    }
+  ]
+}
