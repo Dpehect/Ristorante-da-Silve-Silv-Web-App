@@ -116,12 +116,14 @@ function Particles({ progress }: { progress: number }) {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
+          args={[positions.pos, 3]}
           count={count}
           array={positions.pos}
           itemSize={3}
         />
         <bufferAttribute
           attach="attributes-size"
+          args={[positions.sizes, 1]}
           count={count}
           array={positions.sizes}
           itemSize={1}
