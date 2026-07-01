@@ -1,0 +1,130 @@
+{
+  "season": "Summer 2026",
+  "lastUpdated": "2026-07-01",
+  "categories": [
+    {
+      "id": "antipasti",
+      "name": "Antipasti",
+      "english": "Starters",
+      "dishes": [
+        {
+          "id": "a1",
+          "nameIt": "Pancotto con Pomodori",
+          "nameEn": "Bread Soup with Heirloom Tomatoes",
+          "description": "Slow-cooked bread, sweet tomatoes from the garden, basil oil, and a whisper of garlic. Simple and soulful.",
+          "diet": ["vegetarian"],
+          "note": "A taste of home."
+        },
+        {
+          "id": "a2",
+          "nameIt": "Carpaccio di Pesce Spada",
+          "nameEn": "Swordfish Carpaccio",
+          "description": "Thinly sliced local swordfish, citrus, wild fennel, capers, and olive oil pressed last autumn.",
+          "diet": ["seafood"],
+          "note": ""
+        },
+        {
+          "id": "a3",
+          "nameIt": "Insalata di Fave e Pecorino",
+          "nameEn": "Fresh Fava Bean Salad",
+          "description": "Young fava beans, aged pecorino, mint, and a drizzle of our best extra virgin olive oil.",
+          "diet": ["vegetarian"],
+          "note": "Only when the beans are perfect."
+        }
+      ]
+    },
+    {
+      "id": "primi",
+      "name": "Primi",
+      "english": "First Courses",
+      "dishes": [
+        {
+          "id": "p1",
+          "nameIt": "Orecchiette con Cime di Rapa",
+          "nameEn": "Orecchiette with Turnip Tops",
+          "description": "Handmade pasta, bitter greens, anchovy, chili, and toasted breadcrumbs. The taste of Puglia in every bite.",
+          "diet": ["seafood"],
+          "note": "Maria's hands make the pasta fresh each morning."
+        },
+        {
+          "id": "p2",
+          "nameIt": "Risotto ai Fiori di Zucca",
+          "nameEn": "Zucchini Blossom Risotto",
+          "description": "Creamy Carnaroli rice, delicate zucchini flowers, saffron threads, and a final spoon of aged Parmigiano.",
+          "diet": ["vegetarian"],
+          "note": ""
+        },
+        {
+          "id": "p3",
+          "nameIt": "Tajarin al Sugo di Coniglio",
+          "nameEn": "Thin Egg Noodles with Rabbit Ragù",
+          "description": "Silky handmade pasta, slow-simmered rabbit from the hills, tomato, rosemary, and a touch of orange zest.",
+          "diet": [],
+          "note": "A family favorite."
+        }
+      ]
+    },
+    {
+      "id": "secondi",
+      "name": "Secondi",
+      "english": "Main Courses",
+      "dishes": [
+        {
+          "id": "s1",
+          "nameIt": "Braciole al Sugo",
+          "nameEn": "Beef Rolls in Tomato Sauce",
+          "description": "Thin slices of beef wrapped around herbs, raisins, and pine nuts. Slow-cooked in rich tomato sauce until meltingly tender.",
+          "diet": [],
+          "note": "Silve's favorite to serve."
+        },
+        {
+          "id": "s2",
+          "nameIt": "Cozze Gratinate",
+          "nameEn": "Baked Mussels with Breadcrumbs",
+          "description": "Fresh mussels from the Adriatic, baked with garlic, parsley, and a golden crust of seasoned breadcrumbs.",
+          "diet": ["seafood"],
+          "note": ""
+        },
+        {
+          "id": "s3",
+          "nameIt": "Polpette di Melanzane",
+          "nameEn": "Eggplant Meatballs",
+          "description": "Soft, golden eggplant balls simmered in fresh tomato sauce, finished with basil and ricotta salata.",
+          "diet": ["vegetarian"],
+          "note": "Pure comfort."
+        }
+      ]
+    },
+    {
+      "id": "dolci",
+      "name": "Dolci",
+      "english": "Desserts",
+      "dishes": [
+        {
+          "id": "d1",
+          "nameIt": "Torta alla Ricotta e Mandorle",
+          "nameEn": "Ricotta & Almond Cake",
+          "description": "Warm almond cake with light ricotta cream. Served with wild strawberries or figs, depending on the day.",
+          "diet": ["vegetarian"],
+          "note": ""
+        },
+        {
+          "id": "d2",
+          "nameIt": "Panna Cotta al Limone",
+          "nameEn": "Lemon Panna Cotta",
+          "description": "Silky cream, infused with Amalfi lemons and a whisper of vanilla. Topped with candied peel.",
+          "diet": ["vegetarian"],
+          "note": ""
+        },
+        {
+          "id": "d3",
+          "nameIt": "Biscotti e Vino Santo",
+          "nameEn": "Almond Biscotti & Sweet Wine",
+          "description": "Twice-baked almond cookies to dip in a glass of sweet local wine. An invitation to linger.",
+          "diet": ["vegetarian"],
+          "note": "The perfect end to every evening."
+        }
+      ]
+    }
+  ]
+}

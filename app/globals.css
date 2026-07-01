@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+:root {
+  /* === Warm, Rustic-Luxury Italian Palette === */
+  --bg-cream: #f9f5ed;
+  --bg-warm: #f4efe6;
+  --bg-deep: #3c2f2f;
+  
+  --text-primary: #2c2522;
+  --text-secondary: #5c524b;
+  --text-muted: #81746a;
+  
+  --accent-terracotta: #c46b4e;
+  --accent-olive: #5f6f4e;
+  --accent-gold: #a68b5d;
+  --accent-deep: #3c2f2f;
+  
+  --border-soft: #d9d0c2;
+  --card-bg: #ffffff;
+  --modal-bg: #f9f5ed;
+
+  /* Typography scale */
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-inter, system-ui, sans-serif);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-cream);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Elegant serif headings */
+h1, h2, .serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "tnum", "lnum";
+}
+
+/* Subtle premium feel */
+.section {
+  scroll-margin-top: 80px;
+}
+
+/* Card & surface styles */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
+              box-shadow 0.2s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px -15px rgb(0 0 0 / 0.08);
+  border-color: #c8b9a5;
+}
+
+/* Menu dish cards - delicate expansion */
+.dish-card {
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.dish-card.expanded {
+  background: #f9f5ed;
+}
+
+/* Elegant button */
+.btn-primary {
+  background-color: var(--accent-deep);
+  color: #f9f5ed;
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  letter-spacing: 0.01em;
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-terracotta);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1px solid var(--text-primary);
+  color: var(--text-primary);
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-outline:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-cream);
+}
+
+/* Navbar blur effect */
+.nav-blur {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-scrolled {
+  background-color: rgba(249, 245, 237, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+/* Mobile menu beautiful animation container */
+.mobile-menu {
+  transition: all 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Tab styles for menu */
+.menu-tab {
+  position: relative;
+  padding-bottom: 10px;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.menu-tab.active {
+  color: var(--text-primary);
+}
+
+.menu-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-terracotta);
+}
+
+/* Gallery */
+.gallery-img {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
+              filter 0.4s ease;
+  cursor: pointer;
+}
+
+.gallery-img:hover {
+  transform: scale(1.015);
+  filter: brightness(0.92) saturate(1.05);
+}
+
+/* Modal */
+.modal {
+  animation: modalEnter 0.2s cubic-bezier(0.23, 1.0, 0.32, 1);
+}
+
+@keyframes modalEnter {
+  from { opacity: 0; transform: scale(0.985) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Form fields */
+.input {
+  background: white;
+  border: 1px solid var(--border-soft);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: 0.95rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-terracotta);
+  box-shadow: 0 0 0 3px rgba(196, 107, 78, 0.08);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Success state */
+.success-state {
+  animation: fadeSlideUp 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  animation: gentleBounce 2.2s infinite;
+}
+
+@keyframes gentleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* Small detail: tasteful divider */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-soft), transparent);
+}
+
+/* Admin table */
+.admin-table th,
+.admin-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.admin-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Responsive typography helpers */
+@media (max-width: 640px) {
+  .serif-display {
+    font-size: 2.75rem !important;
+    line-height: 1.05 !important;
+  }
+}
+
+/* Accessibility & focus */
+:focus-visible {
+  outline: 2px solid var(--accent-terracotta);
+  outline-offset: 2px;
+}
