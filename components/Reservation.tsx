@@ -13,7 +13,8 @@ const schema = z.object({
   phone: z.string().min(8),
   date: z.string(),
   time: z.string(),
-  guests: z.coerce.number().min(1).max(8),
+  // Use plain z.number() + valueAsNumber for reliable type inference with zodResolver
+  guests: z.number().min(1).max(8),
   message: z.string().optional(),
   dietary: z.string().optional(),
 });
@@ -85,7 +86,14 @@ export default function Reservation() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <input type="number" {...register("guests")} className="input" min="1" max="8" placeholder="Guests" />
+            <input 
+              type="number" 
+              {...register("guests", { valueAsNumber: true })} 
+              className="input" 
+              min="1" 
+              max="8" 
+              placeholder="Guests" 
+            />
             <input {...register("dietary")} placeholder="Dietary requests" className="input" />
           </div>
 
