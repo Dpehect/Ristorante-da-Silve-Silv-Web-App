@@ -24,7 +24,7 @@ export default function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 nav ${scrolled ? "nav-scrolled" : ""}`}>
       <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#hero" className="font-serif text-[22px] tracking-[-0.4px]">da Silve</a>
+        <a href="#hero" className="font-serif text-[22px] tracking-[-0.3px]">da Silve</a>
 
         <div className="hidden md:flex items-center gap-9 text-sm">
           {links.map((l) => (

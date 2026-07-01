@@ -8,71 +8,69 @@ import { useGSAP } from "@gsap/react";
 export default function Story() {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const paragraphsRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const ctx = gsap.context(() => {
-      // Title reveal - guard against null ref during hydration/mount
-      if (titleRef.current) {
-        gsap.from(titleRef.current, {
-          y: 80,
-          opacity: 0,
-          duration: 1.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 75%",
-          },
-        });
+    // Cinematic title scrub
+    gsap.fromTo(titleRef.current, 
+      { y: 90, opacity: 0.1 },
+      {
+        y: -20,
+        opacity: 1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 78%",
+          end: "top 25%",
+          scrub: 1.1,
+        }
       }
+    );
 
-      // Staggered paragraph reveals — cravburgers.shop style
-      const paras = paragraphsRef.current?.querySelectorAll("p, .story-block");
-      if (paras && paragraphsRef.current) {
-        gsap.from(paras, {
-          y: 60,
-          opacity: 0,
-          duration: 1.2,
-          ease: "power2.out",
-          stagger: 0.18,
-          scrollTrigger: {
-            trigger: paragraphsRef.current,
-            start: "top 72%",
-          },
-        });
-      }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+    // Staggered rich reveals
+    const blocks = contentRef.current?.querySelectorAll(".story-block");
+    if (blocks) {
+      gsap.from(blocks, {
+        y: 70,
+        opacity: 0,
+        duration: 1.3,
+        ease: "power2.out",
+        stagger: 0.22,
+        scrollTrigger: {
+          trigger: contentRef.current,
+          start: "top 70%",
+        },
+      });
+    }
+  }, { scope: sectionRef });
 
   return (
-    <section id="story" ref={sectionRef} className="section max-w-[820px] mx-auto px-6 pt-20 pb-24">
+    <section id="story" ref={sectionRef} className="section max-w-[860px] mx-auto px-6 py-24">
       <div className="text-center mb-16">
-        <span className="text-xs tracking-[4px] text-[#a35f3f]">A FAMILY TABLE</span>
-        <h2 ref={titleRef} className="serif text-[56px] md:text-[68px] tracking-[-2.2px] leading-none mt-3">
-          This is how<br />we live.
+        <span className="text-xs tracking-[4.5px] text-[#a35f3f]">A FAMILY TABLE</span>
+        <h2 ref={titleRef} className="serif text-[58px] md:text-[70px] tracking-[-2.4px] leading-none mt-4">
+          This is how we live.
         </h2>
       </div>
 
-      <div ref={paragraphsRef} className="space-y-14 text-lg md:text-[17.5px] leading-[1.72] text-[#5c5146]">
+      <div ref={contentRef} className="space-y-16 text-[17px] leading-[1.72] text-[#5c5146]">
         <div className="story-block">
-          Every morning Maria walks to the market with an empty basket and an open heart. She buys what speaks to her — the sweetest tomatoes, the fish that just arrived, the herbs that smell like the hills behind our house.
+          Every morning Maria walks the market with an empty basket. She returns with whatever moved her — tomatoes still warm from the vine, fish that arrived at dawn, herbs that smell like the hills.
         </div>
 
-        <div className="grid md:grid-cols-2 gap-x-16 gap-y-10 pt-6">
+        <div className="grid md:grid-cols-2 gap-x-20 gap-y-12 text-[15.5px]">
           <div className="story-block">
-            <span className="block text-[#a35f3f] text-sm tracking-widest mb-2">MARIA</span>
-            She has never written a menu. The food that arrives on the table is whatever moved her that day. She cooks with her hands and her memory.
+            <span className="block text-[#a35f3f] text-xs tracking-[3px] mb-3">MARIA</span>
+            She has never written a menu. The table receives whatever she chose that morning. She cooks with her hands and memory.
           </div>
           <div className="story-block">
-            <span className="block text-[#a35f3f] text-sm tracking-widest mb-2">SILVE</span>
-            He opens the door. He pours the wine slowly. He tells you the story behind every plate. Nothing is rushed here.
+            <span className="block text-[#a35f3f] text-xs tracking-[3px] mb-3">SILVE</span>
+            He opens the door. He pours the wine slowly. He tells you why the dish matters today. Nothing is rushed.
           </div>
         </div>
 
-        <div className="story-block pt-8 text-xl md:text-2xl text-[#3c2e25] leading-tight max-w-[620px]">
-          There are only twelve seats. When they are full, we close the door. We cook for the people who chose to sit with us tonight.
+        <div className="story-block pt-6 text-[21px] leading-tight text-[#3c2e25] max-w-[620px]">
+          Only twelve seats. When they are taken, the door closes. We cook for those who chose to sit with us tonight.
         </div>
       </div>
     </section>

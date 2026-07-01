@@ -9,9 +9,9 @@ import FindUs from "@/components/FindUs";
 import Footer from "@/components/Footer";
 
 /**
- * Ristorante da Silve — Premium cinematic experience.
- * GSAP + ScrollTrigger for dynamic scroll storytelling.
- * Warm, intimate, alive — like cravburgers.shop but more refined.
+ * Ristorante da Silve — Cinematic, alive, and deeply personal.
+ * Heavy GSAP ScrollTrigger + elegant Three.js 3D in the Menu.
+ * Inspired by premium scroll experiences but warm and intimate.
  */
 export default function DaSilve() {
   return (

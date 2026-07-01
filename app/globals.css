@@ -120,20 +120,16 @@ h1, h2, .serif {
 }
 
 .dish-card {
-  background: var(--cream);
-  border: 1px solid var(--border-light);
-  border-radius: 20px;
+  background: #f8f4ed;
+  border: 1px solid #d9d0c1;
+  border-radius: 24px;
   cursor: pointer;
-  overflow: hidden;
   position: relative;
+  transition: box-shadow 0.4s ease;
 }
 
-.dish-card .dish-content {
-  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.dish-card:hover .dish-content {
-  transform: translateY(-2px);
+.dish-card:hover {
+  box-shadow: 0 25px 70px -18px rgba(0, 0, 0, 0.12);
 }
 
 /* Detail Expansion using GSAP controlled */
@@ -146,16 +142,16 @@ h1, h2, .serif {
 /* Gallery */
 .gallery-item {
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 18px;
   position: relative;
 }
 
 .gallery-item img {
-  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 1.2s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
 .gallery-item:hover img {
-  transform: scale(1.08);
+  transform: scale(1.065);
 }
 
 /* Success State */

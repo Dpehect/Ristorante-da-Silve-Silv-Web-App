@@ -1,8 +1,22 @@
 # Ristorante da Silve
 
-A premium, dynamic, and emotionally rich website for a tiny family-run restaurant in Fasano, Puglia.
+A cinematic, premium, and deeply alive website for a tiny family-run restaurant in Fasano, Puglia.
 
-This version takes inspiration from high-end scroll-driven experiences (like cravburgers.shop) while remaining warm, intimate and hand-crafted.
+This redesign combines the powerful scroll-driven storytelling of sites like cravburgers.shop with warm, elegant Italian soul — using heavy GSAP + ScrollTrigger and subtle, refined Three.js interactions (especially in the Menu).
+
+## Key Features
+- GSAP ScrollTrigger for rich section reveals, parallax, and staggered animations
+- Elegant @react-three/fiber 3D dish previews in the Menu (gentle mouse tilt + breathing motion)
+- Lenis smooth scrolling
+- JSON-powered menu + reservations
+- Intimate, high-end, hand-crafted feel
+
+## Animation Strategy
+- **GSAP + ScrollTrigger** is the backbone (staggers, scrubs, parallax, section triggers)
+- **Three.js** is used sparingly and elegantly for the menu — each dish has a small refined 3D preview that reacts to hover with tilt and subtle animation. Never flashy.
+- Micro interactions use GSAP timelines for premium feel.
+
+The site should feel alive while staying warm and personal.
 
 ## Tech & Motion
 - Next.js 15 + TypeScript
