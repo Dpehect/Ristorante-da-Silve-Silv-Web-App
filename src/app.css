@@ -5,7 +5,6 @@
   --color-secondary: #2c2a26;
   --color-accent: #8b7355;
   --color-dark: #1a1916;
-  --font-sans: var(--font-inter);
 }
 
 @layer base {
@@ -15,6 +14,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
   }
 }
 
@@ -25,18 +25,4 @@
 html {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-/* Lenis Smooth Scroll Recommended CSS */
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
 }
