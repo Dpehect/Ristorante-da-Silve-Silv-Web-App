@@ -1,53 +1,64 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { Clock, Users, Leaf } from "lucide-react";
+import React, { useRef } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
-const principles = [
+const experiences = [
   {
-    icon: Leaf,
-    title: "What the morning brings",
-    description: "Maria decides when she returns from the market. The menu is born in the basket, not on paper.",
+    number: "01",
+    title: "What the land gives us",
+    desc: "Maria decides in the morning. The menu is born in her basket, never on a piece of paper.",
   },
   {
-    icon: Users,
-    title: "Twelve guests only",
-    description: "We keep the table small. It never feels like a restaurant. It feels like a dinner among old friends.",
+    number: "02",
+    title: "Twelve people, one table",
+    desc: "It never feels like a restaurant. It feels like dinner at the house of people you already like.",
   },
   {
-    icon: Clock,
-    title: "Time is not hurried",
-    description: "Courses arrive when they are ready. Stories are told between plates. You leave when the night feels complete.",
+    number: "03",
+    title: "Time moves differently here",
+    desc: "Dishes arrive when they are ready. Conversations flow between courses. You leave when the night feels complete.",
   },
 ];
 
 export default function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    const cards = sectionRef.current?.querySelectorAll(".exp-card");
+
+    if (cards) {
+      gsap.from(cards, {
+        y: 90,
+        opacity: 0,
+        duration: 1,
+        ease: "power2.out",
+        stagger: 0.14,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+        },
+      });
+    }
+  }, { scope: sectionRef });
+
   return (
-    <section id="experience" className="section bg-[#F1EDE5] py-20">
+    <section id="experience" ref={sectionRef} className="section bg-[#f0e9df] py-20">
       <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-14">
-          <div className="text-xs tracking-[3px] text-[#A36A4E] mb-3">THE EVENING</div>
-          <h3 className="text-6xl tracking-[-1.4px] leading-none">Tonight at our table</h3>
+        <div className="max-w-md mb-12">
+          <span className="text-xs tracking-[3.5px] text-[#a35f3f]">THE EVENING</span>
+          <h3 className="serif text-[52px] tracking-[-1.6px] leading-none mt-3">Tonight at our table</h3>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {principles.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <motion.div 
-                key={index}
-                whileHover={{ y: -3 }}
-                className="card p-9 group"
-              >
-                <div className="w-11 h-11 rounded-full bg-[#1C1714] text-[#F7F4EE] flex items-center justify-center mb-9">
-                  <Icon size={19} />
-                </div>
-                <h4 className="text-2xl tracking-tight mb-4">{item.title}</h4>
-                <p className="text-[#524A43] leading-[1.65] text-[15px]">{item.description}</p>
-              </motion.div>
-            );
-          })}
+        <div className="grid md:grid-cols-3 gap-5">
+          {experiences.map((item, i) => (
+            <div key={i} className="exp-card bg-[#f8f4ed] rounded-3xl p-9 border border-[#d9d0c1]">
+              <div className="text-[#a35f3f] text-xs tracking-[3px] mb-8">{item.number}</div>
+              <h4 className="serif text-[26px] tracking-tight mb-4 leading-none">{item.title}</h4>
+              <p className="text-[#5c5146] leading-relaxed text-[15px]">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

@@ -8,7 +8,12 @@ import Reservation from "@/components/Reservation";
 import FindUs from "@/components/FindUs";
 import Footer from "@/components/Footer";
 
-export default function RistoranteDaSilve() {
+/**
+ * Ristorante da Silve — Premium cinematic experience.
+ * GSAP + ScrollTrigger for dynamic scroll storytelling.
+ * Warm, intimate, alive — like cravburgers.shop but more refined.
+ */
+export default function DaSilve() {
   return (
     <>
       <Navbar />

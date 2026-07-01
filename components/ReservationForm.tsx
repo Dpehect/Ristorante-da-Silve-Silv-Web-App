@@ -1,13 +1,5 @@
-"use client";
-
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Users, Clock, Check } from "lucide-react";
-import { toast } from "sonner";
-import { TIME_SLOTS } from "@/lib/utils";
+// This file is deprecated. The new GSAP version is Reservation.tsx
+// You can delete this file.
 
 // Zod schema — strict and thoughtful validation for the experience
 const reservationSchema = z.object({

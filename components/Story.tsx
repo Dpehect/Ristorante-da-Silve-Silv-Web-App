@@ -1,53 +1,77 @@
 "use client";
 
-import React from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-/**
- * Cinematic, letter-like storytelling.
- * Uses scroll progress to create an emotional, personal reveal.
- */
 export default function Story() {
-  const { scrollYProgress } = useScroll({
-    target: { current: null }, // We'll let the section drive it naturally
-  });
+  const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const paragraphsRef = useRef<HTMLDivElement>(null);
 
-  const opacity1 = useTransform(scrollYProgress, [0.1, 0.35], [0.2, 1]);
-  const y1 = useTransform(scrollYProgress, [0.1, 0.35], [40, 0]);
+  useGSAP(() => {
+    const ctx = gsap.context(() => {
+      // Title reveal
+      gsap.from(titleRef.current, {
+        y: 80,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 75%",
+        },
+      });
+
+      // Staggered paragraph reveals — cravburgers.shop style
+      const paras = paragraphsRef.current?.querySelectorAll("p, .story-block");
+      if (paras) {
+        gsap.from(paras, {
+          y: 60,
+          opacity: 0,
+          duration: 1.2,
+          ease: "power2.out",
+          stagger: 0.18,
+          scrollTrigger: {
+            trigger: paragraphsRef.current,
+            start: "top 72%",
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="story" className="section max-w-[860px] mx-auto px-6 pt-24 pb-28">
+    <section id="story" ref={sectionRef} className="section max-w-[820px] mx-auto px-6 pt-20 pb-24">
       <div className="text-center mb-16">
-        <div className="uppercase tracking-[4px] text-[10px] text-[#A36A4E] mb-4">A FAMILY INVITATION</div>
-        <h2 className="text-[58px] leading-none tracking-[-1.8px] font-medium">This is how we eat.</h2>
+        <span className="text-xs tracking-[4px] text-[#a35f3f]">A FAMILY TABLE</span>
+        <h2 ref={titleRef} className="serif text-[56px] md:text-[68px] tracking-[-2.2px] leading-none mt-3">
+          This is how<br />we live.
+        </h2>
       </div>
 
-      <div className="space-y-16 text-[17px] leading-[1.65] text-[#524A43]">
-        <motion.div style={{ opacity: opacity1, y: y1 }} className="max-w-[640px]">
-          Every morning Maria walks the market with a basket and no list. 
-          She returns with whatever moved her — tomatoes still warm from the vine, fish that arrived before dawn, herbs that smell like the hills behind the house.
-        </motion.div>
+      <div ref={paragraphsRef} className="space-y-14 text-lg md:text-[17.5px] leading-[1.72] text-[#5c5146]">
+        <div className="story-block">
+          Every morning Maria walks to the market with an empty basket and an open heart. She buys what speaks to her — the sweetest tomatoes, the fish that just arrived, the herbs that smell like the hills behind our house.
+        </div>
 
-        <div className="grid md:grid-cols-12 gap-x-10 gap-y-8 text-[15px]">
-          <div className="md:col-span-5 text-[#A36A4E] font-medium tracking-tight">Maria</div>
-          <div className="md:col-span-7 leading-relaxed">
-            She has never written a menu in her life. The table is set for whoever arrives that evening. 
-            She cooks from memory and feeling. When the food is ready, it comes out.
+        <div className="grid md:grid-cols-2 gap-x-16 gap-y-10 pt-6">
+          <div className="story-block">
+            <span className="block text-[#a35f3f] text-sm tracking-widest mb-2">MARIA</span>
+            She has never written a menu. The food that arrives on the table is whatever moved her that day. She cooks with her hands and her memory.
           </div>
-
-          <div className="md:col-span-5 text-[#A36A4E] font-medium tracking-tight pt-6 md:pt-0">Silve</div>
-          <div className="md:col-span-7 leading-relaxed pt-6 md:pt-0">
-            He opens the door. He pours the wine. He tells you what his mother made and why it matters today. 
-            There is no rush. The evening unfolds the way evenings should.
+          <div className="story-block">
+            <span className="block text-[#a35f3f] text-sm tracking-widest mb-2">SILVE</span>
+            He opens the door. He pours the wine slowly. He tells you the story behind every plate. Nothing is rushed here.
           </div>
         </div>
-      </div>
 
-      <div className="mt-16 pt-8 border-t border-[#D8D0C2] max-w-[620px]">
-        <p className="text-[#524A43] italic text-[15px]">
-          There are twelve seats. When they are taken, the door is closed. 
-          We cook for the people who chose to sit with us that night.
-        </p>
+        <div className="story-block pt-8 text-xl md:text-2xl text-[#3c2e25] leading-tight max-w-[620px]">
+          There are only twelve seats. When they are full, we close the door. We cook for the people who chose to sit with us tonight.
+        </div>
       </div>
     </section>
   );

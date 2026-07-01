@@ -1,9 +1,6 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Leaf, Fish, UtensilsCrossed } from "lucide-react";
-import type { MenuData, MenuCategory, Dish } from "@/lib/types";
+// Deprecated. New dynamic GSAP Menu is in Menu.tsx
+// Safe to delete.
+export default function Deprecated() { return null; }
 
 interface MenuResponse {
   success: boolean;

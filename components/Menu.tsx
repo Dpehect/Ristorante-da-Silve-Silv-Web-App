@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import type { MenuData, Dish } from "@/lib/types";
 
-// We will fetch live from API
 const categories = [
   { id: "antipasti", label: "Antipasti" },
   { id: "primi", label: "Primi" },
@@ -13,187 +13,202 @@ const categories = [
   { id: "dolci", label: "Dolci" },
 ];
 
-/**
- * Elegant 3D Tilt Card
- * Uses Framer Motion values for buttery mouse-follow tilt.
- * Feels expensive and hand-crafted.
- */
-function TiltDishCard({ 
-  dish, 
-  onClick 
-}: { 
-  dish: Dish; 
-  onClick: () => void;
-}) {
-  const [rotateX, setRotateX] = React.useState(0);
-  const [rotateY, setRotateY] = React.useState(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-    const rotX = -y * 7; // subtle tilt
-    const rotY = x * 9;
-
-    setRotateX(rotX);
-    setRotateY(rotY);
-  };
-
-  const resetTilt = () => {
-    setRotateX(0);
-    setRotateY(0);
-  };
-
-  return (
-    <motion.div
-      onClick={onClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={resetTilt}
-      whileHover={{ scale: 1.005 }}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
-      transition={{ type: "spring", stiffness: 180, damping: 24 }}
-      className="dish-card p-8 md:p-9 flex flex-col h-full"
-    >
-      <div className="flex-1">
-        <div className="font-serif text-[23px] leading-none tracking-[-0.4px] mb-1">
-          {dish.nameIt}
-        </div>
-        <div className="text-[#7A6F64] text-[13px] tracking-tight mb-4">
-          {dish.nameEn}
-        </div>
-        <p className="text-[#524A43] leading-[1.65] text-[14.5px] pr-4">
-          {dish.description}
-        </p>
-      </div>
-
-      {dish.note && (
-        <div className="mt-auto pt-6 text-xs text-[#A36A4E] italic tracking-wide">
-          {dish.note}
-        </div>
-      )}
-
-      <div className="mt-5 flex gap-2">
-        {dish.diet.includes("vegetarian") && (
-          <div className="text-[10px] px-3 py-px rounded-full bg-[#475C3A]/10 text-[#475C3A]">Vegetarian</div>
-        )}
-        {dish.diet.includes("seafood") && (
-          <div className="text-[10px] px-3 py-px rounded-full bg-[#4A6B7F]/10 text-[#4A6B7F]">Seafood</div>
-        )}
-      </div>
-    </motion.div>
-  );
-}
-
 export default function Menu() {
-  const [activeCategory, setActiveCategory] = useState("antipasti");
-  const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
-  const [menuData, setMenuData] = useState<MenuData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [activeCat, setActiveCat] = useState("antipasti");
+  const [selected, setSelected] = useState<Dish | null>(null);
+  const [menu, setMenu] = useState<MenuData | null>(null);
 
-  // Fetch live menu from JSON API
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  // Load menu from JSON API
   React.useEffect(() => {
-    async function loadMenu() {
-      try {
-        const res = await fetch("/api/menu");
-        const json = await res.json();
-        if (json.success) setMenuData(json.data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadMenu();
+    fetch("/api/menu")
+      .then((r) => r.json())
+      .then((res) => {
+        if (res.success) setMenu(res.data);
+      });
   }, []);
 
-  const currentCategory = menuData?.categories.find((c) => c.id === activeCategory);
+  const currentDishes = menu?.categories.find((c) => c.id === activeCat)?.dishes || [];
+
+  // GSAP: Staggered entry when section enters view (cravburgers.shop energy)
+  useGSAP(() => {
+    if (!cardsRef.current) return;
+
+    const cards = cardsRef.current.querySelectorAll(".dish-card");
+
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top 65%",
+      onEnter: () => {
+        gsap.fromTo(
+          cards,
+          { y: 80, opacity: 0, scale: 0.985 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.9,
+            ease: "power2.out",
+            stagger: 0.07,
+          }
+        );
+      },
+      once: true,
+    });
+  }, { scope: sectionRef, dependencies: [currentDishes] });
+
+  // GSAP Hover animation
+  const handleHover = (e: React.MouseEvent<HTMLDivElement>, enter: boolean) => {
+    const card = e.currentTarget;
+    const title = card.querySelector(".dish-title");
+
+    gsap.to(card, {
+      scale: enter ? 1.01 : 1,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+
+    if (title) {
+      gsap.to(title, {
+        x: enter ? 6 : 0,
+        duration: 0.35,
+        ease: "power1.out",
+      });
+    }
+  };
+
+  // GSAP animated detail open
+  const openDish = (dish: Dish) => {
+    setSelected(dish);
+
+    // Animate modal in with GSAP
+    requestAnimationFrame(() => {
+      const modal = document.querySelector(".dish-modal");
+      if (modal) {
+        gsap.fromTo(
+          modal,
+          { y: 60, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55, ease: "power2.out" }
+        );
+      }
+    });
+  };
+
+  const closeDish = () => {
+    const modal = document.querySelector(".dish-modal");
+    if (modal) {
+      gsap.to(modal, {
+        y: 50,
+        opacity: 0,
+        duration: 0.35,
+        ease: "power2.in",
+        onComplete: () => setSelected(null),
+      });
+    } else {
+      setSelected(null);
+    }
+  };
+
+  // Smooth category change
+  const changeCategory = (id: string) => {
+    if (id === activeCat) return;
+
+    const cards = cardsRef.current?.querySelectorAll(".dish-card");
+
+    if (cards && cards.length) {
+      gsap.to(cards, {
+        opacity: 0,
+        y: 20,
+        duration: 0.25,
+        ease: "power2.in",
+        onComplete: () => {
+          setActiveCat(id);
+          gsap.fromTo(
+            cards,
+            { y: 40, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, stagger: 0.06, ease: "power2.out" }
+          );
+        },
+      });
+    } else {
+      setActiveCat(id);
+    }
+  };
 
   return (
-    <section id="menu" className="section max-w-6xl mx-auto px-6 pt-20 pb-28">
-      <div className="flex flex-col items-center mb-12">
-        <div className="text-[#A36A4E] text-xs tracking-[3px] mb-2">THE TABLE TONIGHT</div>
-        <h3 className="text-center text-[62px] tracking-[-1.8px] leading-none">What we are serving</h3>
+    <section id="menu" ref={sectionRef} className="section max-w-6xl mx-auto px-6 py-20">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-11 gap-y-4">
+        <div>
+          <span className="text-xs tracking-[3.5px] text-[#a35f3f]">THE TABLE TONIGHT</span>
+          <h3 className="serif text-[58px] tracking-[-1.8px] leading-none mt-1">What we are serving</h3>
+        </div>
+        <div className="text-[#a35f3f] text-sm">Maria cooks what moved her today</div>
       </div>
 
-      {/* Beautiful category switcher */}
-      <div className="flex justify-center mb-14">
-        <div className="category-switch">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={activeCategory === cat.id ? "active" : ""}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+      {/* Category Pills */}
+      <div className="flex flex-wrap gap-2 mb-10 border-b border-[#d9d0c1] pb-2">
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => changeCategory(cat.id)}
+            className={`menu-category ${activeCat === cat.id ? "active" : "bg-[#f0e9df] text-[#5c5146]"}`}
+          >
+            {cat.label}
+          </button>
+        ))}
       </div>
 
-      {/* Dishes Grid */}
-      {loading ? (
-        <div className="grid md:grid-cols-2 gap-4">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-64 rounded-3xl bg-white/60 animate-pulse" />
-          ))}
-        </div>
-      ) : (
-        <div className="grid md:grid-cols-2 gap-4">
-          <AnimatePresence mode="wait">
-            {currentCategory?.dishes.map((dish, index) => (
-              <TiltDishCard 
-                key={dish.id} 
-                dish={dish} 
-                onClick={() => setSelectedDish(dish)} 
-              />
-            ))}
-          </AnimatePresence>
+      {/* Dish Grid with scroll-triggered stagger */}
+      <div ref={cardsRef} className="grid md:grid-cols-2 gap-4">
+        {currentDishes.map((dish) => (
+          <div
+            key={dish.id}
+            onClick={() => openDish(dish)}
+            onMouseEnter={(e) => handleHover(e, true)}
+            onMouseLeave={(e) => handleHover(e, false)}
+            className="dish-card p-8 md:p-9 flex flex-col"
+          >
+            <div className="dish-content flex-1">
+              <div className="dish-title serif text-[26px] tracking-[-0.4px] leading-none mb-1.5">
+                {dish.nameIt}
+              </div>
+              <div className="text-[#8a7b6c] text-sm mb-5 tracking-tight">{dish.nameEn}</div>
+              <p className="text-[#5c5146] leading-[1.65] text-[15px] pr-2">
+                {dish.description}
+              </p>
+            </div>
+
+            {dish.note && <div className="text-[#a35f3f] text-xs mt-6 italic tracking-wide">{dish.note}</div>}
+          </div>
+        ))}
+      </div>
+
+      {/* GSAP Animated Dish Detail */}
+      {selected && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4" onClick={closeDish}>
+          <div
+            className="dish-modal dish-detail w-full max-w-[620px] p-10 md:p-12 text-[#2a211c] relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button onClick={closeDish} className="absolute top-9 right-9 text-[#8a7b6c] hover:text-[#a35f3f]">Close</button>
+
+            <div className="serif text-[42px] tracking-[-1px] leading-none mb-2">{selected.nameIt}</div>
+            <div className="text-[#a35f3f] mb-8">{selected.nameEn}</div>
+
+            <p className="text-lg leading-relaxed text-[#5c5146]">{selected.description}</p>
+
+            {selected.note && (
+              <div className="mt-10 border-l-2 border-[#a35f3f] pl-6 text-[#a35f3f] italic">
+                {selected.note}
+              </div>
+            )}
+
+            <div className="mt-12 text-xs text-[#8a7b6c] tracking-[2px]">SERVED WHEN IT IS READY</div>
+          </div>
         </div>
       )}
-
-      {/* Dish Detail Modal — luxurious and intimate */}
-      <AnimatePresence>
-        {selectedDish && (
-          <div className="fixed inset-0 bg-black/70 z-[80] flex items-center justify-center p-5" onClick={() => setSelectedDish(null)}>
-            <motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.985 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 40, scale: 0.985 }}
-              transition={{ ease: [0.21, 0.92, 0.3, 1], duration: 0.4 }}
-              onClick={(e) => e.stopPropagation()}
-              className="dish-detail w-full max-w-[640px] p-10 md:p-14 relative"
-            >
-              <button onClick={() => setSelectedDish(null)} className="absolute top-8 right-8 text-[#7A6F64]">
-                <X size={21} />
-              </button>
-
-              <div className="font-serif text-[42px] leading-none tracking-[-1.1px] mb-2">
-                {selectedDish.nameIt}
-              </div>
-              <div className="text-[#A36A4E] tracking-tight mb-8">{selectedDish.nameEn}</div>
-
-              <div className="text-[15.5px] leading-[1.75] text-[#524A43] pr-4">
-                {selectedDish.description}
-              </div>
-
-              {selectedDish.note && (
-                <div className="mt-9 border-l-2 pl-5 border-[#A36A4E]/30 text-[#A36A4E] text-sm tracking-wide italic">
-                  {selectedDish.note}
-                </div>
-              )}
-
-              <div className="mt-12 text-xs uppercase tracking-[2px] text-[#7A6F64]">
-                Served when it is ready
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

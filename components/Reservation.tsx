@@ -1,150 +1,107 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
 import { toast } from "sonner";
 
 const schema = z.object({
-  fullName: z.string().min(3, "Please enter your name"),
-  email: z.string().email("Please enter a valid email address"),
+  fullName: z.string().min(3),
+  email: z.string().email(),
   phone: z.string().min(8),
-  date: z.string().min(1, "Choose a date"),
+  date: z.string(),
   time: z.string(),
-  guests: z.number().min(1, "Please select at least 1 guest").max(8, "Maximum 8 guests"),
+  guests: z.coerce.number().min(1).max(8),
   message: z.string().optional(),
   dietary: z.string().optional(),
 });
 
-type FormValues = z.infer<typeof schema>;
+type FormData = z.infer<typeof schema>;
 
 const timeSlots = ["19:00", "19:30", "20:00", "20:30", "21:00", "21:30"];
 
 export default function Reservation() {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { 
-      guests: 2, 
-      time: "20:00" 
-    } as const,
+    defaultValues: { guests: 2, time: "20:00" },
   });
 
-  const onSubmit = async (data: FormValues) => {
-    setIsSubmitting(true);
-
+  const onSubmit = async (data: FormData) => {
     try {
       const res = await fetch("/api/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-
       const json = await res.json();
 
       if (!json.success) throw new Error();
 
-      setIsSuccess(true);
-      toast.success("Your table is being prepared.", { duration: 4200 });
-      reset();
+      // GSAP success animation
+      setSubmitted(true);
+      toast.success("Your table is being prepared.");
+
+      if (formRef.current) {
+        gsap.to(formRef.current, {
+          opacity: 0,
+          y: 30,
+          duration: 0.4,
+          onComplete: () => {
+            reset();
+            setSubmitted(false);
+          },
+        });
+      }
     } catch {
-      toast.error("We could not hold your seat. Please call us directly.");
-    } finally {
-      setIsSubmitting(false);
+      toast.error("Could not hold the table. Please call us.");
     }
   };
 
   return (
-    <section id="reserve" className="section max-w-[680px] mx-auto px-6 pt-16 pb-28">
-      <div className="text-center mb-12">
-        <div className="text-[#A36A4E] text-xs tracking-[3.5px]">JOIN US AT THE TABLE</div>
-        <h3 className="mt-3 text-[54px] leading-none tracking-[-1.2px]">Reserve your place</h3>
+    <section id="reserve" className="section max-w-[660px] mx-auto px-6 pt-14 pb-24">
+      <div className="text-center mb-10">
+        <span className="text-xs tracking-[3.5px] text-[#a35f3f]">JOIN US</span>
+        <h3 className="serif mt-2 text-[52px] tracking-[-1.4px]">Reserve your place</h3>
       </div>
 
-      <AnimatePresence mode="wait">
-        {!isSuccess ? (
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div>
-                <input {...register("fullName")} placeholder="Full name" className="input" />
-                {errors.fullName && <p className="text-xs text-red-600 mt-1.5 ml-1">{errors.fullName.message}</p>}
-              </div>
-              <div>
-                <input {...register("email")} placeholder="Email address" className="input" />
-                {errors.email && <p className="text-xs text-red-600 mt-1.5 ml-1">{errors.email.message}</p>}
-              </div>
-            </div>
+      {!submitted ? (
+        <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <input {...register("fullName")} placeholder="Full name" className="input" />
+            <input {...register("email")} type="email" placeholder="Email" className="input" />
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div>
-                <input {...register("phone")} placeholder="Phone number" className="input" />
-              </div>
-              <div>
-                <input type="date" {...register("date")} className="input" min="2026-07-03" />
-              </div>
-              <div>
-                <select {...register("time")} className="input">
-                  {timeSlots.map((t) => <option key={t} value={t}>{t}</option>)}
-                </select>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <input {...register("phone")} placeholder="Phone" className="input" />
+            <input type="date" {...register("date")} className="input" />
+            <select {...register("time")} className="input">
+              {timeSlots.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <input 
-                type="number" 
-                {...register("guests", { 
-                  valueAsNumber: true 
-                })} 
-                className="input" 
-                placeholder="Number of guests" 
-                min="1" 
-                max="8" 
-              />
-              {errors.guests && (
-                <p className="text-xs text-red-600 mt-1.5 ml-1">{errors.guests.message}</p>
-              )}
-              <input {...register("dietary")} className="input" placeholder="Dietary requirements" />
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <input type="number" {...register("guests")} className="input" min="1" max="8" placeholder="Guests" />
+            <input {...register("dietary")} placeholder="Dietary requests" className="input" />
+          </div>
 
-            <textarea 
-              {...register("message")} 
-              className="input min-h-[106px] resize-y" 
-              placeholder="Anything you would like us to know?" 
-            />
+          <textarea {...register("message")} className="input h-28" placeholder="Message for Silve and Maria" />
 
-            <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="btn btn-primary w-full mt-4 py-4 text-[15px] tracking-widest disabled:opacity-70"
-            >
-              {isSubmitting ? "HOLDING YOUR SEAT..." : "HOLD MY PLACE AT THE TABLE"}
-            </button>
-          </form>
-        ) : (
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            className="success-overlay text-center py-16 border border-[#D8D0C2] rounded-3xl bg-[#FFFBF5]"
-          >
-            <div className="mx-auto mb-7 text-[#A36A4E] text-xs tracking-[4px]">WE ARE READY</div>
-            <div className="text-[46px] tracking-[-1.3px] leading-none mb-4">Your seat is waiting.</div>
-            <p className="max-w-xs mx-auto text-[#524A43]">
-              We look forward to welcoming you into our home. 
-              You will receive a confirmation shortly.
-            </p>
-            <button 
-              onClick={() => setIsSuccess(false)} 
-              className="mt-9 text-sm underline underline-offset-4"
-            >
-              Reserve another evening
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <button type="submit" className="btn btn-primary w-full mt-3 text-base">
+            HOLD MY PLACE AT THE TABLE
+          </button>
+        </form>
+      ) : (
+        <div className="success-state text-center py-12 border border-[#d9d0c1] rounded-3xl bg-[#f8f4ed]">
+          <p className="text-[#a35f3f] text-sm tracking-widest">WE ARE READY FOR YOU</p>
+          <p className="serif text-[38px] mt-4 tracking-tight">Your seat is waiting.</p>
+          <p className="text-[#5c5146] mt-3 max-w-xs mx-auto">You’ll receive confirmation shortly. We look forward to having you at our table.</p>
+        </div>
+      )}
     </section>
   );
 }

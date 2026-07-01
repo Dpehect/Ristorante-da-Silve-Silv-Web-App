@@ -1,61 +1,45 @@
-# Ristorante da Silve — A Cinematic Digital Experience
+# Ristorante da Silve
 
-A completely hand-crafted, premium website for a tiny family-run restaurant in Fasano, Puglia.
+A premium, dynamic, and emotionally rich website for a tiny family-run restaurant in Fasano, Puglia.
 
-Built to feel like an intimate invitation rather than a commercial website.
+This version takes inspiration from high-end scroll-driven experiences (like cravburgers.shop) while remaining warm, intimate and hand-crafted.
 
-## Design Philosophy
-- Apple-level minimalism + warm Italian soul
-- Every motion is deliberate and slow
-- Heavy but tasteful use of Framer Motion
-- Subtle, poetic Three.js used only in Hero and menu interactions
-- Smooth Lenis scrolling
-
-## Tech
+## Tech & Motion
 - Next.js 15 + TypeScript
-- Framer Motion
-- @react-three/fiber + drei + three.js
-- Lenis (smooth scroll)
+- **GSAP + ScrollTrigger** (primary animation engine)
+- Lenis for buttery smooth scrolling
 - React Hook Form + Zod
-- Pure JSON file backend (fs/promises)
+- Pure file-based JSON backend (`fs/promises`)
 
-## Running the project
+## Key Motion Highlights
+- Parallax + scrub animations in Hero
+- Staggered scroll reveals throughout (Story, Experience, Gallery)
+- Menu: Staggered card entrance + GSAP hover + beautiful GSAP detail expansion + category transitions
+- Reservation form with GSAP micro interactions
+
+## Running
 
 ```bash
-cd /path/to/trygrok1
 npm install
 npm run dev
 ```
 
-Visit http://localhost:3000
-
-## Key Highlights
-- Cinematic Hero with subtle light-ray WebGL
-- Scroll-driven personal story
-- Highly interactive menu with 3D tilt cards + luxurious detail panels
-- Refined reservation flow with beautiful success state
-- JSON-driven menu + reservations
-
 ## Folder Structure
-
 ```
 app/
-  api/               # JSON backend routes
-  layout.tsx
-  page.tsx
+  api/ (menu + reservations)
 components/
-  Hero.tsx           # + ThreeHeroBackground
-  Story.tsx          # Scroll cinematic storytelling
-  Menu.tsx           # Star of the site — tilt + detail
-  Reservation.tsx
+  providers/GSAPProvider.tsx
+  providers/LenisProvider.tsx
+  Hero.tsx
+  Story.tsx
+  Experience.tsx
+  Menu.tsx          ← Highly dynamic
   Gallery.tsx
-  ...
-data/
-  menu.json
-  reservations.json
+  Reservation.tsx
+data/menu.json
+data/reservations.json
 ```
 
-## Notes
-The backend is intentionally file-based. All reservations are appended to `data/reservations.json`.
+The site should feel alive and special. Every scroll interaction was designed with care.
 
-This project was rebuilt from the ground up to feel personal, emotional, and hand-crafted.

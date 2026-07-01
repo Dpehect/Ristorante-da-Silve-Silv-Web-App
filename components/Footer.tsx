@@ -2,10 +2,10 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#D8D0C2] py-14 text-center text-xs text-[#7A6F64]">
-      <div className="font-serif text-[#1C1714] tracking-tighter text-xl mb-1">da Silve</div>
-      <div>Fasano, Puglia • +39 331 722 6444</div>
-      <div className="mt-6">© {new Date().getFullYear()} Maria and Silve. No menu. Only heart.</div>
+    <footer className="border-t border-[#d9d0c1] py-12 text-center text-sm text-[#8a7b6c]">
+      <div className="font-serif text-[#2a211c] text-2xl tracking-tighter">da Silve</div>
+      <div className="mt-1 tracking-[1px]">FASANO • PUGLIA</div>
+      <div className="mt-7 text-xs">© {new Date().getFullYear()} Maria &amp; Silve. A table with no menu.</div>
     </footer>
   );
 }
