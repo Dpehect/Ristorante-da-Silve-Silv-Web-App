@@ -3,8 +3,8 @@
   import { Canvas } from '@threlte/core';
   import gsap from 'gsap';
   import MenuScene from './MenuScene.svelte';
+  import MenuItem from './MenuItem.svelte';
   import menuData from '../data/menu.json';
-  import { spring } from 'svelte/motion';
 
   let containerRef: HTMLElement;
   let hoveredDish: string | null = $state(null);
@@ -54,22 +54,12 @@
     }
   });
 
-  // Array of springs for hover state
-  const springs: Record<string, any> = {};
-  menuData.categories.forEach(c => {
-    c.items.forEach(i => {
-      springs[i.id] = spring({ x: 0 }, { stiffness: 0.1, damping: 0.4 });
-    });
-  });
-
   function handleMouseEnter(id: string) {
     hoveredDish = id;
-    springs[id].set({ x: 10 });
   }
 
   function handleMouseLeave(id: string) {
     hoveredDish = null;
-    springs[id].set({ x: 0 });
   }
 </script>
 
@@ -94,23 +84,7 @@
           </h4>
           <div class="space-y-12">
             {#each category.items as item}
-              <!-- svelte-ignore a11y_no_static_element_interactions -->
-              <div
-                class="menu-item group cursor-pointer"
-                onmouseenter={() => handleMouseEnter(item.id)}
-                onmouseleave={() => handleMouseLeave(item.id)}
-                style="transform: translateX({$springs[item.id].x}px);"
-              >
-                <div class="flex justify-between items-baseline mb-2">
-                  <h5 class="text-xl tracking-wider text-primary group-hover:text-accent transition-colors duration-500">
-                    {item.name}
-                  </h5>
-                  <span class="text-accent/60 font-mono tracking-widest">{item.price}</span>
-                </div>
-                <p class="text-primary/50 text-sm tracking-wide max-w-2xl leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+              <MenuItem {item} onHover={handleMouseEnter} onLeave={handleMouseLeave} />
             {/each}
           </div>
         </div>
