@@ -2,52 +2,85 @@
   "categories": [
     {
       "name": "Antipasti",
+      "particleTheme": "leaves",
+      "orbColor1": [0.85, 0.70, 0.20],
+      "orbColor2": [0.20, 0.50, 0.15],
       "items": [
         {
           "id": "a1",
           "name": "Burrata Artigianale",
+          "tagline": "La Puglia in un Morso",
           "description": "Hand-crafted burrata from local farms, heirloom tomatoes, basil oil.",
-          "price": "€18"
+          "story": "Our burrata is made each morning by Maria's cousin in Andria — the birthplace of burrata. The milk comes from bufala raised on the Murge plateau. It is pulled by hand, shaped into its signature form, and delivered before noon. We serve it with tomatoes from our garden and oil pressed last October.",
+          "ingredients": ["Fresh bufala burrata", "Heirloom tomatoes", "Cold-press basil oil", "Puglian sea salt", "Black pepper", "Wild oregano"],
+          "price": "€18",
+          "image": "https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=800&q=80&auto=format&fit=crop"
         },
         {
           "id": "a2",
           "name": "Polpo Arrostito",
+          "tagline": "Dal Mare Adriatico",
           "description": "Charred octopus, smoked potato puree, Taggiasca olives, caper powder.",
-          "price": "€24"
+          "story": "Each morning, Silve visits the Fasano fish market. The octopus is first tenderized against dock rocks — an ancient technique passed down through generations — then slow-cooked for four hours before being seared over open fire. The smoke is part of the dish's soul.",
+          "ingredients": ["Adriatic octopus", "Smoked potato purée", "Taggiasca olives", "Capers", "Lemon confit", "Micro herbs"],
+          "price": "€24",
+          "image": "https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=800&q=80&auto=format&fit=crop"
         }
       ]
     },
     {
       "name": "Primi",
+      "particleTheme": "wheat",
+      "orbColor1": [0.95, 0.85, 0.60],
+      "orbColor2": [0.70, 0.35, 0.15],
       "items": [
         {
           "id": "p1",
           "name": "Orecchiette al Pomodoro",
+          "tagline": "La Pasta dell'Anima",
           "description": "Handmade orecchiette, roasted cherry tomatoes, cacioricotta, fresh basil.",
-          "price": "€22"
+          "story": "Orecchiette — 'little ears' — are Puglia's soul. Our nonna Rosa makes them by hand each afternoon, pressing each one with her thumb in a gesture she has repeated for sixty years. The tomatoes are from our garden, slow-roasted until their sweetness concentrates into something profound.",
+          "ingredients": ["Hand-rolled orecchiette", "Roasted cherry tomatoes", "Cacioricotta DOP", "Garden basil", "Extra virgin olive oil", "Garlic"],
+          "price": "€22",
+          "image": "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800&q=80&auto=format&fit=crop"
         },
         {
           "id": "p2",
           "name": "Risotto ai Frutti di Mare",
+          "tagline": "Il Profumo del Mare",
           "description": "Acquerello rice, fresh Adriatic seafood, lemon zest, saffron.",
-          "price": "€28"
+          "story": "This risotto is made only when the sea is right. We use Acquerello rice aged for one year, stirred for eighteen minutes without pause. Saffron from Abruzzo blooms in warm broth. Clams and scampi arrive still breathing from the morning catch. We finish it with lemon from our terrace tree.",
+          "ingredients": ["Acquerello aged rice", "Adriatic clams & mussels", "Fresh scampi", "Abruzzo saffron", "Lemon zest", "White wine", "Parsley butter"],
+          "price": "€28",
+          "image": "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&q=80&auto=format&fit=crop"
         }
       ]
     },
     {
       "name": "Secondi",
+      "particleTheme": "embers",
+      "orbColor1": [0.65, 0.15, 0.10],
+      "orbColor2": [0.30, 0.12, 0.05],
       "items": [
         {
           "id": "s1",
           "name": "Pescato del Giorno",
+          "tagline": "La Grazia del Giorno",
           "description": "Catch of the day, baked in salt crust or grilled with seasonal vegetables.",
-          "price": "€35"
+          "story": "We do not know what we will serve until Silve returns from the market. Some mornings it is orata, others branzino or spigola. The salt crust method, taught to Silve by his grandfather, seals every molecule of moisture inside the fish. It steams in its own essence for thirty minutes.",
+          "ingredients": ["Daily market catch", "Rock salt crust", "Lemon & wild thyme", "Seasonal vegetables", "Puglian extra virgin olive oil"],
+          "price": "€35",
+          "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&q=80&auto=format&fit=crop"
         },
         {
           "id": "s2",
           "name": "Filetto di Manzo",
+          "tagline": "La Potenza della Terra",
           "description": "Beef tenderloin, Primitivo reduction, roasted wild mushrooms.",
-          "price": "€42"
+          "story": "We source our beef from a small farm near Alberobello, where cattle graze on Valle d'Itria pastures. The Primitivo wine reduction takes three hours and collapses into a dark velvet. The mushrooms are foraged from the Murge hills the morning of service. Nothing here is incidental.",
+          "ingredients": ["Alberobello beef tenderloin", "Primitivo di Manduria reduction", "Foraged porcini", "Truffle butter", "Rosemary", "Crispy shallots"],
+          "price": "€42",
+          "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=800&q=80&auto=format&fit=crop"
         }
       ]
     }
