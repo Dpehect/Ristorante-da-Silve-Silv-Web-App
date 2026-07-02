@@ -83,7 +83,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
 
       <!-- Image 0 — hero (2 cols × 2 rows) -->
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions a11y_click_events_have_key_events -->
       <div
         class="g-card md:col-span-2 relative overflow-hidden cursor-pointer group"
         style="aspect-ratio: 16/9; transform-style: preserve-3d;"

@@ -61,11 +61,13 @@
 
 <!-- ── Onboarding hint toast ── -->
 {#if showHint && !hintDismissed}
-  <!-- svelte-ignore a11y_click_events_have_key_events a11y_no_static_element_interactions -->
   <div
+    role="button"
+    tabindex="0"
     class="fixed bottom-8 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 px-6 py-4 border border-primary/10 backdrop-blur-sm cursor-pointer"
     style="background:rgba(30,27,23,0.92); animation: hintIn 0.6s ease-out both;"
     onclick={dismissHint}
+    onkeydown={(e) => e.key === 'Enter' && dismissHint()}
   >
     <div class="w-1 h-8 rounded-full" style="background:linear-gradient(to bottom, #b8733a, transparent)"></div>
     <div>
