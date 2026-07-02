@@ -1,28 +1,50 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #f5f0e6;
-  --color-secondary: #2c2a26;
-  --color-accent: #8b7355;
-  --color-dark: #1a1916;
+  /* Warm Italian Palette */
+  --color-primary:   #f0e9d8;
+  --color-secondary: #1e1b17;
+  --color-accent:    #b8733a;
+  --color-gold:      #c9a84c;
+  --color-dark:      #131109;
+  --color-muted:     #7a6e60;
 }
 
 @layer base {
   body {
     background-color: var(--color-secondary);
     color: var(--color-primary);
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    letter-spacing: 0.02em;
   }
 }
 
-/* Hide scrollbar for cinematic feel */
-::-webkit-scrollbar {
-  display: none;
+/* Scrollbar — hidden for cinematic feel */
+::-webkit-scrollbar { display: none; }
+html { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Selection */
+::selection {
+  background: rgba(184, 115, 58, 0.25);
+  color: #f0e9d8;
 }
-html {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+/* Utility: serif font */
+.font-serif {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+}
+
+/* Utility: smooth image rendering */
+img {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
